@@ -1,4 +1,4 @@
-package saldo.app;
+package saldo.app.email.counter;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Main {
+public class EmailDomainCounter {
 
     private static final String AT_SIGN = "@";
 
     public static void main(String[] args) {
-        System.out.println(findTopNEmailDomains(generateMockEmailList(), 3));
+        System.out.println(findTopNEmailDomains(generateMockEmailList(), 10));
     }
 
     /**
@@ -27,7 +27,7 @@ public class Main {
         return emails.stream()
                 // optional filter, if we are sure that data validation happens before - filter can be removed
                 .filter(email -> email != null && email.contains(AT_SIGN))
-                .collect(Collectors.groupingBy(Main::extractDomainFromEmail, Collectors.counting()))
+                .collect(Collectors.groupingBy(EmailDomainCounter::extractDomainFromEmail, Collectors.counting()))
                 .entrySet().stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
                 .limit(maxAmountOfReturnedEmails)
